@@ -8,8 +8,8 @@ import {
 } from "three";
 import { setFrames } from "../../Utils";
 
-export const PIC_SIZE = 0.25;
-export const FRAME_WIDTH = 0.01;
+export const PIC_SIZE = 0.7;
+export const FRAME_WIDTH = 0.02;
 
 const loader = new TextureLoader();
 export type Frame = Mesh<BoxGeometry, MeshStandardMaterial>;
@@ -41,7 +41,7 @@ export class Picture extends Group {
 
       this.sizes = {
         w: aspect >= 1 ? PIC_SIZE : PIC_SIZE * aspect,
-        h: aspect <= 1 ? PIC_SIZE : PIC_SIZE * aspect,
+        h: aspect <= 1 ? PIC_SIZE : PIC_SIZE / aspect,
       };
 
       this.painting = new Mesh(
@@ -71,7 +71,11 @@ export class Picture extends Group {
       ];
 
       setFrames(this.frames, this.sizes);
-      this.position.set(0, 0.5, -1);
+
+      [...this.frames, this.painting].forEach((el) => {
+        el.position.z += FRAME_WIDTH / 2;
+      });
+
       this.add(this.painting, ...this.frames);
     });
   }
