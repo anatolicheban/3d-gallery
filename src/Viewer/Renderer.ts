@@ -63,7 +63,7 @@ export class Renderer {
         walls,
       );
 
-      const vel = 0.04;
+      const vel = 0.02;
       canForward && moving.forward && controls.moveForward(vel);
       canBackward && moving.backward && controls.moveForward(-vel);
       canLeft && moving.left && controls.moveRight(-vel);

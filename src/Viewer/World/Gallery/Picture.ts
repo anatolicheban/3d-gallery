@@ -34,7 +34,7 @@ export class Picture extends Group {
           map: texture,
         }),
       );
-      this.painting.position.setY(0.5);
+      this.painting.position.set(0, 0.5, -1);
 
       this.add(this.painting);
     });
