@@ -25,3 +25,5 @@ export const checkCollisions = (
   // return false;
   return object && object.distance < 0.5;
 };
+
+export const setFrames = () => {};
