@@ -18,7 +18,7 @@ export class Gallery {
   body = new Group();
 
   floor = new Mesh(
-    new PlaneGeometry(4, 4),
+    new PlaneGeometry(8, 8),
     new MeshStandardMaterial({
       side: DoubleSide,
       roughness: 0.05,
@@ -32,7 +32,7 @@ export class Gallery {
     this.floor.rotation.x = -Math.PI / 2;
 
     const w = new Mesh(
-      new PlaneGeometry(4, 1),
+      new PlaneGeometry(8, 1),
       new MeshStandardMaterial({
         side: DoubleSide,
       }),
