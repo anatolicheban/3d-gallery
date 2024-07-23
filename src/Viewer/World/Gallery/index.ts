@@ -29,7 +29,7 @@ export class Gallery {
 
   walls: Walls;
 
-  picture = new Picture("/public/van-gogh.jpg");
+  picture = new Picture("/public/mona-lisa.jpg");
 
   constructor() {
     this.floor.rotation.x = -Math.PI / 2;
