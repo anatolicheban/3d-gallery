@@ -11,13 +11,20 @@ export class Camera {
     0.1,
     100,
   );
-  controls = new OrbitControls(this.instance, this.viewer.canvas);
-  // controls = new PointerLockControls(this.instance, this.viewer.canvas);
+  // controls = new OrbitControls(this.instance, this.viewer.canvas);
+  controls = new PointerLockControls(this.instance, this.viewer.canvas);
+
+  moving = {
+    forward: false,
+    backward: false,
+    rightward: false,
+    leftward: false,
+  };
 
   constructor() {
     //Instance
-    this.instance.position.set(-1, 1, 5);
-    // this.instance.position.set(0, 1, 0);
+    // this.instance.position.set(-1, 1, 5);
+    this.instance.position.set(0, 0.5, 0);
     this.viewer.scene.add(this.instance);
     // this.controls.connect();
     //Controls
@@ -25,10 +32,7 @@ export class Camera {
     this.controls.minDistance = 0.5;
     this.controls.maxDistance = 100;
 
-    // window.addEventListener("keydown", (e) => {
-    //   if (e.code === "Enter")
-    //     this.controls.isLocked ? this.controls.unlock() : this.controls.lock();
-    // });
+    this.setListeners();
   }
 
   resize() {
@@ -37,7 +41,50 @@ export class Camera {
   }
 
   update() {
-    this.controls.update();
+    // this.controls.update();
     // this.controls.moveForward(0.01);
+  }
+
+  setListeners() {
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Enter")
+        this.controls.isLocked ? this.controls.unlock() : this.controls.lock();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "KeyW") {
+        this.moving.forward = true;
+      }
+
+      if (e.code === "KeyS") {
+        this.moving.backward = true;
+      }
+
+      if (e.code === "KeyD") {
+        this.moving.rightward = true;
+      }
+
+      if (e.code === "KeyA") {
+        this.moving.leftward = true;
+      }
+    });
+
+    window.addEventListener("keyup", (e) => {
+      if (e.code === "KeyW") {
+        this.moving.forward = false;
+      }
+
+      if (e.code === "KeyS") {
+        this.moving.backward = false;
+      }
+
+      if (e.code === "KeyD") {
+        this.moving.rightward = false;
+      }
+
+      if (e.code === "KeyA") {
+        this.moving.leftward = false;
+      }
+    });
   }
 }

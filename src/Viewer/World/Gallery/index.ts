@@ -21,6 +21,8 @@ export class Gallery {
     new PlaneGeometry(4, 4),
     new MeshStandardMaterial({
       side: DoubleSide,
+      roughness: 0.05,
+      metalness: 0.25,
     }),
   );
 

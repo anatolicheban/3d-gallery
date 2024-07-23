@@ -1,5 +1,5 @@
 import { Viewer } from "./index.ts";
-import { WebGLRenderer } from "three";
+import { Raycaster, WebGLRenderer } from "three";
 import Stats from "three/examples/jsm/libs/stats.module.js";
 
 export class Renderer {
@@ -8,6 +8,8 @@ export class Renderer {
     canvas: this.viewer.canvas,
     antialias: true,
   });
+
+  raycaster = new Raycaster();
 
   stats = new Stats();
 
@@ -24,6 +26,17 @@ export class Renderer {
   }
 
   update() {
+    const controls = this.viewer.camera.controls;
+    const move = this.viewer.camera.moving;
+
+    if (controls.isLocked) {
+      const vel = 0.04;
+      move.forward && controls.moveForward(vel);
+      move.backward && controls.moveForward(-vel);
+      move.leftward && controls.moveRight(-vel);
+      move.rightward && controls.moveRight(vel);
+    }
+
     this.instance.render(this.viewer.scene, this.viewer.camera.instance);
     this.stats.update();
   }
