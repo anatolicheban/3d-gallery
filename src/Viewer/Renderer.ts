@@ -1,6 +1,7 @@
 import { Viewer } from "./index.ts";
 import { Raycaster, Vector3, WebGLRenderer } from "three";
 import Stats from "three/examples/jsm/libs/stats.module.js";
+import { checkCollisions } from "./Utils";
 
 export class Renderer {
   viewer = new Viewer();
@@ -30,11 +31,6 @@ export class Renderer {
     const walls = this.viewer.world.gallery.walls;
 
     if (controls.isLocked) {
-      let canForward = true;
-      let canBackward = true;
-      let canLeft = true;
-      let canRight = true;
-
       const origin = this.viewer.camera.instance.position;
       const dir = new Vector3();
 
@@ -43,27 +39,29 @@ export class Renderer {
       dir.normalize();
 
       //Forward check
-      this.raycaster.set(origin, dir);
-      const forwardObj = this.raycaster.intersectObjects(walls)[0];
-      if (forwardObj && forwardObj.distance < 0.3) canForward = false;
+      const canForward = !checkCollisions(this.raycaster, origin, dir, walls);
 
       //Backward check
       const backDir = new Vector3(-dir.x, 0, -dir.z);
-      this.raycaster.set(origin, backDir);
-      const backwardObj = this.raycaster.intersectObjects(walls)[0];
-      if (backwardObj && backwardObj.distance < 0.3) canBackward = false;
+      const canBackward = !checkCollisions(
+        this.raycaster,
+        origin,
+        backDir,
+        walls,
+      );
 
       //Left check
       const leftDir = new Vector3(dir.z, 0, -dir.x);
-      this.raycaster.set(origin, leftDir);
-      const leftObj = this.raycaster.intersectObjects(walls)[0];
-      if (leftObj && leftObj.distance < 0.3) canLeft = false;
+      const canLeft = !checkCollisions(this.raycaster, origin, leftDir, walls);
 
       //Right check
       const rightDir = new Vector3(-dir.z, 0, dir.x);
-      this.raycaster.set(origin, rightDir);
-      const rightObj = this.raycaster.intersectObjects(walls)[0];
-      if (rightObj && rightObj.distance < 0.3) canRight = false;
+      const canRight = !checkCollisions(
+        this.raycaster,
+        origin,
+        rightDir,
+        walls,
+      );
 
       const vel = 0.04;
       canForward && moving.forward && controls.moveForward(vel);
