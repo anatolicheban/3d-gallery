@@ -17,8 +17,8 @@ export class Camera {
   moving = {
     forward: false,
     backward: false,
-    rightward: false,
-    leftward: false,
+    right: false,
+    left: false,
   };
 
   constructor() {
@@ -61,11 +61,11 @@ export class Camera {
       }
 
       if (e.code === "KeyD") {
-        this.moving.rightward = true;
+        this.moving.right = true;
       }
 
       if (e.code === "KeyA") {
-        this.moving.leftward = true;
+        this.moving.left = true;
       }
     });
 
@@ -79,11 +79,11 @@ export class Camera {
       }
 
       if (e.code === "KeyD") {
-        this.moving.rightward = false;
+        this.moving.right = false;
       }
 
       if (e.code === "KeyA") {
-        this.moving.leftward = false;
+        this.moving.left = false;
       }
     });
   }
