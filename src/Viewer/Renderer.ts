@@ -26,15 +26,14 @@ export class Renderer {
   }
 
   update() {
-    const controls = this.viewer.camera.controls;
-    const move = this.viewer.camera.moving;
+    const { controls, moving } = this.viewer.camera;
 
     if (controls.isLocked) {
       const vel = 0.04;
-      move.forward && controls.moveForward(vel);
-      move.backward && controls.moveForward(-vel);
-      move.leftward && controls.moveRight(-vel);
-      move.rightward && controls.moveRight(vel);
+      moving.forward && controls.moveForward(vel);
+      moving.backward && controls.moveForward(-vel);
+      moving.leftward && controls.moveRight(-vel);
+      moving.rightward && controls.moveRight(vel);
     }
 
     this.instance.render(this.viewer.scene, this.viewer.camera.instance);
