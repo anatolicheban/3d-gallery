@@ -7,6 +7,7 @@ import {
   PlaneGeometry,
 } from "three";
 import { setWalls } from "../../Utils";
+import { Picture } from "./Picture.ts";
 
 export type Wall = Mesh<PlaneGeometry, MeshStandardMaterial>;
 
@@ -18,7 +19,7 @@ export class Gallery {
   body = new Group();
 
   floor = new Mesh(
-    new PlaneGeometry(8, 8),
+    new PlaneGeometry(6, 6),
     new MeshStandardMaterial({
       side: DoubleSide,
       roughness: 0.05,
@@ -28,11 +29,13 @@ export class Gallery {
 
   walls: Walls;
 
+  picture = new Picture("/public/van-gogh.jpg");
+
   constructor() {
     this.floor.rotation.x = -Math.PI / 2;
 
     const w = new Mesh(
-      new PlaneGeometry(8, 1),
+      new PlaneGeometry(6, 1),
       new MeshStandardMaterial({
         side: DoubleSide,
       }),
@@ -42,7 +45,7 @@ export class Gallery {
 
     setWalls(this.walls);
 
-    this.body.add(this.floor, ...this.walls);
+    this.body.add(this.floor, ...this.walls, this.picture);
     this.viewer.scene.add(this.body);
   }
 }
