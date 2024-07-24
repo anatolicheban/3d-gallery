@@ -1,7 +1,8 @@
-import { PerspectiveCamera } from "three";
+import { PerspectiveCamera, Raycaster, Vector3 } from "three";
 import { Viewer } from "./index.ts";
 import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { checkCollisions } from "./Utils";
 
 export class Camera {
   viewer = new Viewer();
@@ -13,6 +14,7 @@ export class Camera {
   );
   // controls = new OrbitControls(this.instance, this.viewer.canvas);
   controls = new PointerLockControls(this.instance, this.viewer.canvas);
+  raycaster = new Raycaster();
 
   moving = {
     forward: false,
@@ -43,6 +45,82 @@ export class Camera {
   update() {
     // this.controls.update();
     // this.controls.moveForward(0.01);
+
+    const { controls, moving } = this.viewer.camera;
+    const walls = this.viewer.world.gallery.walls;
+
+    if (controls.isLocked) {
+      const origin = this.viewer.camera.instance.position;
+      // const dir = new Vector3();
+      //
+      // this.viewer.camera.instance.getWorldDirection(dir);
+      // dir.y = 0;
+      // dir.normalize();
+      //
+      // //Forward check
+      // const canForward = !checkCollisions(this.raycaster, origin, dir, walls);
+      //
+      // //Backward check
+      // const backDir = new Vector3(-dir.x, 0, -dir.z);
+      // const canBackward = !checkCollisions(
+      //   this.raycaster,
+      //   origin,
+      //   backDir,
+      //   walls,
+      // );
+      //
+      // //Left check
+      // const leftDir = new Vector3(dir.z, 0, -dir.x);
+      // const canLeft = !checkCollisions(this.raycaster, origin, leftDir, walls);
+      //
+      // //Right check
+      // const rightDir = new Vector3(-dir.z, 0, dir.x);
+      // const canRight = !checkCollisions(
+      //   this.raycaster,
+      //   origin,
+      //   rightDir,
+      //   walls,
+      // );
+
+      const vel = 0.02;
+      // canForward &&
+      moving.forward && controls.moveForward(vel);
+      // canBackward &&
+      moving.backward && controls.moveForward(-vel);
+      // canLeft &&
+      moving.left && controls.moveRight(-vel);
+      // canRight &&
+      moving.right && controls.moveRight(vel);
+
+      const forwardDir = new Vector3(0, 0, -1);
+      const backwardFir = new Vector3(0, 0, 1);
+      const leftDir = new Vector3(-1, 0, 0);
+      const rightDir = new Vector3(1, 0, 0);
+
+      //fwd
+      this.raycaster.set(origin, forwardDir);
+      const fwdPoint = this.raycaster.intersectObjects(walls)[0]?.point;
+      if (fwdPoint && origin.distanceTo(fwdPoint) < 0.2)
+        this.instance.position.z = fwdPoint.z + 0.2;
+
+      //bwd
+      this.raycaster.set(origin, backwardFir);
+      const bwdPoint = this.raycaster.intersectObjects(walls)[0]?.point;
+      if (bwdPoint && origin.distanceTo(bwdPoint) < 0.2)
+        this.instance.position.z = bwdPoint.z - 0.2;
+
+      //left
+      this.raycaster.set(origin, leftDir);
+      const leftPoint = this.raycaster.intersectObjects(walls)[0]?.point;
+      if (leftPoint && origin.distanceTo(leftPoint) < 0.2)
+        this.instance.position.x = leftPoint.x + 0.2;
+
+      //right
+      this.raycaster.set(origin, rightDir);
+      const rightPoint = this.raycaster.intersectObjects(walls)[0]?.point;
+      if (rightPoint && origin.distanceTo(rightPoint) < 0.2)
+        this.instance.position.x = rightPoint.x - 0.2;
+    }
   }
 
   setListeners() {

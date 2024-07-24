@@ -10,7 +10,6 @@ import {
 } from "three";
 import { setWalls } from "../../Utils";
 import { Picture } from "./Picture.ts";
-import { texture } from "three/examples/jsm/nodes/accessors/TextureNode";
 
 export type Wall = Mesh<PlaneGeometry, MeshStandardMaterial>;
 
@@ -30,32 +29,86 @@ export class Gallery {
     }),
   );
 
+  ceil = new Mesh(
+    new PlaneGeometry(6, 6),
+    new MeshStandardMaterial({
+      side: DoubleSide,
+      roughness: 0.25,
+    }),
+  );
+
   walls: Walls;
 
   // picture = new Picture("/public/mona-lisa.jpg");
 
   pictures = {
-    monaLisa: new Picture("/public/mona-lisa.jpg"),
-    vanGogh: new Picture("/public/van-gogh.jpg"),
-    vanGogh2: new Picture("/public/van-gogh-2.jpg"),
+    monaLisa: new Picture(
+      "/public/mona-lisa.jpg",
+      'Leonardo da Vinci "Mona Lisa, La Gioconda"',
+    ),
+    vanGogh: new Picture(
+      "/public/van-gogh.jpg",
+      'Van Gogh "De sterrennacht", 1889',
+    ),
+    vanGogh2: new Picture(
+      "/public/van-gogh-2.jpg",
+      'Edvard Munch "The Scream", 1893',
+    ),
+    leo: new Picture(
+      "/public/leo.jpg",
+      'Leonardo da Vinci "Dama con l\'ermellino", 1490',
+    ),
+    wave: new Picture(
+      "/wave.jpg",
+      'Hokusai "The Great Wave off Kanagawa", 1831',
+    ),
+    rembrandt: new Picture(
+      "/rembrandt.jpg",
+      'Rembrandt "The Return Of The Prodigal Son", 1669',
+    ),
+    monet: new Picture(
+      "/monet.jpg",
+      'Oscar-Claude Monet "Impression, soleil levant", 1872',
+    ),
+    liberty: new Picture(
+      "/liberty.webp",
+      'Eugène Delacroix "La Liberté guidant le peuple", 1830',
+    ),
+
+    irises: new Picture("/irises.jpg", 'Van Gogh "Irises", 1889'),
   };
 
   constructor() {
-    new TextureLoader().load("/floor-2.jpg", (t) => {
+    this.viewer.loader.load("/floor-2.jpg", (t) => {
       t.wrapS = RepeatWrapping;
       t.wrapT = RepeatWrapping;
-      t.repeat.set(5, 5);
+      t.repeat.set(10, 10);
       t.needsUpdate = true;
       this.floor.material.map = t;
       this.floor.material.needsUpdate = true;
     });
 
+    this.viewer.loader.load("/ceil3.jpg", (t) => {
+      t.wrapS = RepeatWrapping;
+      t.wrapT = RepeatWrapping;
+      t.repeat.set(10, 10);
+      t.needsUpdate = true;
+      this.ceil.material.map = t;
+      this.ceil.material.needsUpdate = true;
+    });
+
     this.floor.rotation.x = -Math.PI / 2;
 
+    this.ceil.rotation.x = Math.PI / 2;
+    this.ceil.position.y = 2;
+
     const w = new Mesh(
-      new PlaneGeometry(6, 1),
+      new PlaneGeometry(6, 2),
       new MeshStandardMaterial({
         side: DoubleSide,
+        color: "#fff",
+        // roughness: 0,
+        // metalness: 0.5,
       }),
     );
 
@@ -65,19 +118,57 @@ export class Gallery {
 
     this.setPictures();
 
-    this.body.add(this.floor, ...this.walls);
+    this.body.add(this.floor, ...this.walls, this.ceil);
     this.viewer.scene.add(this.body);
   }
 
   setPictures() {
-    const { monaLisa, vanGogh, vanGogh2 } = this.pictures;
+    const {
+      monaLisa,
+      vanGogh,
+      vanGogh2,
+      leo,
+      wave,
+      rembrandt,
+      monet,
+      liberty,
+      irises,
+    } = this.pictures;
 
-    monaLisa.position.set(0, 0.5, -3);
+    monaLisa.position.set(0, 1, -3);
 
-    vanGogh.position.set(-1.5, 0.5, -3);
+    vanGogh.position.set(-1.5, 1, -3);
 
-    vanGogh2.position.set(1.5, 0.5, -3);
+    vanGogh2.position.set(1.5, 1, -3);
 
-    this.body.add(monaLisa, vanGogh, vanGogh2);
+    leo.position.set(-3, 1, 1.5);
+    leo.rotation.y = Math.PI / 2;
+
+    wave.position.set(-3, 1, 0);
+    wave.rotation.y = Math.PI / 2;
+
+    rembrandt.position.set(-3, 1, -1.5);
+    rembrandt.rotation.y = Math.PI / 2;
+
+    monet.position.set(3, 1, -1.5);
+    monet.rotation.y = -Math.PI / 2;
+
+    liberty.position.set(3, 1, 0);
+    liberty.rotation.y = -Math.PI / 2;
+
+    irises.position.set(3, 1, 1.5);
+    irises.rotation.y = -Math.PI / 2;
+
+    this.body.add(
+      monaLisa,
+      vanGogh,
+      vanGogh2,
+      leo,
+      wave,
+      rembrandt,
+      monet,
+      liberty,
+      irises,
+    );
   }
 }
