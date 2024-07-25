@@ -6,10 +6,10 @@ import {
   MeshStandardMaterial,
   PlaneGeometry,
   RepeatWrapping,
-  TextureLoader,
 } from "three";
 import { setWalls } from "../../Utils";
 import { Picture } from "./Picture.ts";
+import { PATH } from "../../../main.ts";
 
 export type Wall = Mesh<PlaneGeometry, MeshStandardMaterial>;
 
@@ -39,47 +39,50 @@ export class Gallery {
 
   walls: Walls;
 
-  // picture = new Picture("/public/mona-lisa.jpg");
-
   pictures = {
     monaLisa: new Picture(
-      "/public/mona-lisa.jpg",
+      `${PATH}/mona-lisa.jpg`,
       'Leonardo da Vinci "Mona Lisa, La Gioconda"',
     ),
     vanGogh: new Picture(
-      "/public/van-gogh.jpg",
+      `${PATH}/van-gogh.jpg`,
       'Van Gogh "De sterrennacht", 1889',
     ),
     vanGogh2: new Picture(
-      "/public/van-gogh-2.jpg",
+      `${PATH}/van-gogh-2.jpg`,
       'Edvard Munch "The Scream", 1893',
     ),
     leo: new Picture(
-      "/public/leo.jpg",
+      `${PATH}/leo.jpg`,
       'Leonardo da Vinci "Dama con l\'ermellino", 1490',
     ),
     wave: new Picture(
-      "/wave.jpg",
+      `${PATH}/wave.jpg`,
       'Hokusai "The Great Wave off Kanagawa", 1831',
     ),
     rembrandt: new Picture(
-      "/rembrandt.jpg",
+      `${PATH}/rembrandt.jpg`,
       'Rembrandt "The Return Of The Prodigal Son", 1669',
     ),
     monet: new Picture(
-      "/monet.jpg",
+      `${PATH}/monet.jpg`,
       'Oscar-Claude Monet "Impression, soleil levant", 1872',
     ),
     liberty: new Picture(
-      "/liberty.webp",
+      `${PATH}/liberty.webp`,
       'Eugène Delacroix "La Liberté guidant le peuple", 1830',
     ),
 
-    irises: new Picture("/irises.jpg", 'Van Gogh "Irises", 1889'),
-  };
+    irises: new Picture(`${PATH}/irises.jpg`, 'Van Gogh "Irises", 1889'),
 
+    lastSupper: new Picture(
+      `${PATH}/last-supper.jpg`,
+      'Leonardo da Vinci "The Last Supper"',
+      1.75,
+    ),
+  };
   constructor() {
-    this.viewer.loader.load("/floor-2.jpg", (t) => {
+    this.viewer.loader.texture.load(`${PATH}/floor-2.jpg`, (t) => {
       t.wrapS = RepeatWrapping;
       t.wrapT = RepeatWrapping;
       t.repeat.set(10, 10);
@@ -88,7 +91,7 @@ export class Gallery {
       this.floor.material.needsUpdate = true;
     });
 
-    this.viewer.loader.load("/ceil3.jpg", (t) => {
+    this.viewer.loader.texture.load(`${PATH}/ceil3.jpg`, (t) => {
       t.wrapS = RepeatWrapping;
       t.wrapT = RepeatWrapping;
       t.repeat.set(10, 10);
@@ -133,6 +136,7 @@ export class Gallery {
       monet,
       liberty,
       irises,
+      lastSupper,
     } = this.pictures;
 
     monaLisa.position.set(0, 1, -3);
@@ -159,6 +163,9 @@ export class Gallery {
     irises.position.set(3, 1, 1.5);
     irises.rotation.y = -Math.PI / 2;
 
+    lastSupper.position.set(0, 1, 3);
+    lastSupper.rotation.y = Math.PI;
+
     this.body.add(
       monaLisa,
       vanGogh,
@@ -169,6 +176,7 @@ export class Gallery {
       monet,
       liberty,
       irises,
+      lastSupper,
     );
   }
 }

@@ -1,11 +1,6 @@
 import { Walls } from "../World/Gallery";
 import { Object3D, Raycaster, Vector3 } from "three";
-import {
-  Frame,
-  FRAME_WIDTH,
-  Frames,
-  PictureSizes,
-} from "../World/Gallery/Picture.ts";
+import { FRAME_WIDTH, Frames, PictureSizes } from "../World/Gallery/Picture.ts";
 
 export const setWalls = (walls: Walls) => {
   walls[0].position.set(-3, 1, 0);

@@ -10,7 +10,7 @@ export class World {
   gallery = new Gallery();
 
   constructor() {
-    // this.axesHelper.visible = false;
+    this.axesHelper.visible = false;
     this.viewer.scene.add(this.axesHelper);
   }
 }

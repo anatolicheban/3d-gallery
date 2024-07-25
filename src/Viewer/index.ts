@@ -5,13 +5,14 @@ import { Scene, TextureLoader } from "three";
 import { Sizes } from "./Utils/Sizes.ts";
 import { Time } from "./Utils/Time.ts";
 import { DebugUI } from "./Utils/DebugUI.ts";
+import { Loader } from "./Utils/Loader.ts";
 
 let _viewer: Viewer;
 //undefined
 //Viewer
 
 export class Viewer {
-  canvas: HTMLCanvasElement;
+  canvas?: HTMLCanvasElement;
   wrapper?: HTMLElement;
 
   camera: Camera;
@@ -22,7 +23,7 @@ export class Viewer {
   //Utils
   sizes: Sizes;
   time: Time;
-  loader = new TextureLoader();
+  loader: Loader;
 
   debugUI: DebugUI;
 
@@ -43,6 +44,9 @@ export class Viewer {
     this.scene = new Scene();
     this.camera = new Camera();
     this.renderer = new Renderer();
+
+    this.loader = new Loader();
+
     this.world = new World();
 
     this.setListeners();

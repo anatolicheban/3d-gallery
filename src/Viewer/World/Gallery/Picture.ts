@@ -1,17 +1,18 @@
 import {
   Box3,
   BoxGeometry,
-  BufferGeometry,
   Group,
   Mesh,
   MeshStandardMaterial,
   PlaneGeometry,
-  TextureLoader,
 } from "three";
 import { setFrames } from "../../Utils";
 import { Viewer } from "../../index.ts";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+//@ts-ignore
+import { Font } from "three/examples/jsm/loaders/FontLoader";
+//@ts-ignore
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
+import { PATH } from "../../../main.ts";
 
 export const PIC_SIZE = 0.7;
 export const FRAME_WIDTH = 0.02;
@@ -40,10 +41,10 @@ export class Picture extends Group {
   desc?: Mesh<TextGeometry, MeshStandardMaterial>;
 
   frames?: Frames;
-  constructor(image: string, text = "Text") {
+  constructor(image: string, text = "Text", size = PIC_SIZE) {
     super();
 
-    new FontLoader().load("/gentilis.json", (font) => {
+    this.viewer.loader.font.load(`${PATH}/gentilis.json`, (font: Font) => {
       this.desc = new Mesh(
         new TextGeometry(text, {
           font,
@@ -58,12 +59,12 @@ export class Picture extends Group {
       this.add(this.desc);
     });
 
-    this.viewer.loader.load(image, (texture) => {
+    this.viewer.loader.texture.load(image, (texture) => {
       const aspect = texture.image.width / texture.image.height;
 
       this.sizes = {
-        w: aspect >= 1 ? PIC_SIZE : PIC_SIZE * aspect,
-        h: aspect <= 1 ? PIC_SIZE : PIC_SIZE / aspect,
+        w: aspect >= 1 ? size : size * aspect,
+        h: aspect <= 1 ? size : size / aspect,
       };
 
       this.setDescPos();

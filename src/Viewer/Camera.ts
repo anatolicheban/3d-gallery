@@ -1,8 +1,8 @@
 import { PerspectiveCamera, Raycaster, Vector3 } from "three";
 import { Viewer } from "./index.ts";
 import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { checkCollisions } from "./Utils";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+// import { checkCollisions } from "./Utils";
 
 export class Camera {
   viewer = new Viewer();
@@ -30,9 +30,9 @@ export class Camera {
     this.viewer.scene.add(this.instance);
     // this.controls.connect();
     //Controls
-    this.controls.enableDamping = true;
-    this.controls.minDistance = 0.5;
-    this.controls.maxDistance = 100;
+    // this.controls.enableDamping = true;
+    // this.controls.minDistance = 0.5;
+    // this.controls.maxDistance = 100;
 
     this.setListeners();
   }
