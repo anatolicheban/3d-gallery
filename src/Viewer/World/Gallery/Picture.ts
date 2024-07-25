@@ -12,7 +12,7 @@ import { Viewer } from "../../index.ts";
 import { Font } from "three/examples/jsm/loaders/FontLoader";
 //@ts-ignore
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
-import { PATH } from "../../../main.ts";
+import { TextureNames } from "../../Utils/Loader.ts";
 
 export const PIC_SIZE = 0.7;
 export const FRAME_WIDTH = 0.02;
@@ -41,13 +41,13 @@ export class Picture extends Group {
   desc?: Mesh<TextGeometry, MeshStandardMaterial>;
 
   frames?: Frames;
-  constructor(image: string, text = "Text", size = PIC_SIZE) {
+  constructor(picture: TextureNames, text = "Text", size = PIC_SIZE) {
     super();
 
-    this.viewer.loader.font.load(`${PATH}/gentilis.json`, (font: Font) => {
+    this.viewer.loader.itemsLoaded.on(({ textures, fonts }) => {
       this.desc = new Mesh(
         new TextGeometry(text, {
-          font,
+          font: fonts.gentilis,
           size: 0.04,
           depth: 0.005,
         }),
@@ -55,19 +55,14 @@ export class Picture extends Group {
           color: "#000",
         }),
       );
-      this.setDescPos();
-      this.add(this.desc);
-    });
 
-    this.viewer.loader.texture.load(image, (texture) => {
+      const texture = textures[picture];
       const aspect = texture.image.width / texture.image.height;
 
       this.sizes = {
         w: aspect >= 1 ? size : size * aspect,
         h: aspect <= 1 ? size : size / aspect,
       };
-
-      this.setDescPos();
 
       this.painting = new Mesh(
         new PlaneGeometry(this.sizes.w, this.sizes.h),
@@ -101,7 +96,8 @@ export class Picture extends Group {
         el.position.z += FRAME_WIDTH / 2;
       });
 
-      this.add(this.painting, ...this.frames);
+      this.setDescPos();
+      this.add(this.desc, this.painting, ...this.frames);
     });
   }
 
@@ -109,9 +105,7 @@ export class Picture extends Group {
     if (!this.desc) return;
 
     const box = new Box3().setFromObject(this.desc);
-
     const l = box.max.x - box.min.x;
-
     this.desc.position.set(-l / 2, -this.sizes.h / 2 - 0.1, 0);
   }
 }

@@ -9,7 +9,7 @@ import {
 } from "three";
 import { setWalls } from "../../Utils";
 import { Picture } from "./Picture.ts";
-import { PATH } from "../../../main.ts";
+import { PATH } from "../../Utils/Loader.ts";
 
 export type Wall = Mesh<PlaneGeometry, MeshStandardMaterial>;
 
@@ -41,42 +41,30 @@ export class Gallery {
 
   pictures = {
     monaLisa: new Picture(
-      `${PATH}/mona-lisa.jpg`,
+      `monaLisa`,
       'Leonardo da Vinci "Mona Lisa, La Gioconda"',
     ),
-    vanGogh: new Picture(
-      `${PATH}/van-gogh.jpg`,
-      'Van Gogh "De sterrennacht", 1889',
-    ),
-    vanGogh2: new Picture(
-      `${PATH}/van-gogh-2.jpg`,
-      'Edvard Munch "The Scream", 1893',
-    ),
-    leo: new Picture(
-      `${PATH}/leo.jpg`,
-      'Leonardo da Vinci "Dama con l\'ermellino", 1490',
-    ),
-    wave: new Picture(
-      `${PATH}/wave.jpg`,
-      'Hokusai "The Great Wave off Kanagawa", 1831',
-    ),
+    vanGogh: new Picture(`vanGogh`, 'Van Gogh "De sterrennacht", 1889'),
+    munch: new Picture("munch", 'Edvard Munch "The Scream", 1893'),
+    leo: new Picture("leo", 'Leonardo da Vinci "Dama con l\'ermellino", 1490'),
+    wave: new Picture("wave", 'Hokusai "The Great Wave off Kanagawa", 1831'),
     rembrandt: new Picture(
-      `${PATH}/rembrandt.jpg`,
+      `rembrandt`,
       'Rembrandt "The Return Of The Prodigal Son", 1669',
     ),
     monet: new Picture(
-      `${PATH}/monet.jpg`,
+      `monet`,
       'Oscar-Claude Monet "Impression, soleil levant", 1872',
     ),
     liberty: new Picture(
-      `${PATH}/liberty.webp`,
+      `liberty`,
       'Eugène Delacroix "La Liberté guidant le peuple", 1830',
     ),
 
-    irises: new Picture(`${PATH}/irises.jpg`, 'Van Gogh "Irises", 1889'),
+    irises: new Picture(`irises`, 'Van Gogh "Irises", 1889'),
 
     lastSupper: new Picture(
-      `${PATH}/last-supper.jpg`,
+      `lastSupper`,
       'Leonardo da Vinci "The Last Supper"',
       1.75,
     ),
@@ -110,8 +98,6 @@ export class Gallery {
       new MeshStandardMaterial({
         side: DoubleSide,
         color: "#fff",
-        // roughness: 0,
-        // metalness: 0.5,
       }),
     );
 
@@ -129,7 +115,7 @@ export class Gallery {
     const {
       monaLisa,
       vanGogh,
-      vanGogh2,
+      munch,
       leo,
       wave,
       rembrandt,
@@ -143,7 +129,7 @@ export class Gallery {
 
     vanGogh.position.set(-1.5, 1, -3);
 
-    vanGogh2.position.set(1.5, 1, -3);
+    munch.position.set(1.5, 1, -3);
 
     leo.position.set(-3, 1, 1.5);
     leo.rotation.y = Math.PI / 2;
@@ -169,7 +155,7 @@ export class Gallery {
     this.body.add(
       monaLisa,
       vanGogh,
-      vanGogh2,
+      munch,
       leo,
       wave,
       rembrandt,
