@@ -40,12 +40,11 @@ export class Viewer {
     //Utils
     this.sizes = new Sizes();
     this.time = new Time();
+    this.loader = new Loader();
 
     this.scene = new Scene();
     this.camera = new Camera();
     this.renderer = new Renderer();
-
-    this.loader = new Loader();
 
     this.world = new World();
 

@@ -34,7 +34,9 @@ export class Camera {
     // this.controls.minDistance = 0.5;
     // this.controls.maxDistance = 100;
 
-    this.setListeners();
+    this.viewer.loader.itemsLoaded.on(() => {
+      this.setListeners();
+    });
   }
 
   resize() {

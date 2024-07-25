@@ -16,6 +16,9 @@ const progressLine = document.querySelector(
   ".progress-line",
 )! as HTMLDivElement;
 const progressValue = document.querySelector(".progress-value")!;
+const pressEnterText = document.querySelector(".press")!;
+
+// const pauseScreen = document.getElementById("pause")!;
 
 viewer.loader.progressEvent.on((p) => {
   const percent = `${p.toFixed(2)}%`;
@@ -23,8 +26,15 @@ viewer.loader.progressEvent.on((p) => {
   progressValue.innerHTML = percent;
 
   if (p === 100) {
-    setTimeout(() => {
-      loader.classList.add("hidden");
-    }, 2000);
+    pressEnterText.classList.add("shown");
+    // pauseScreen.classList.add("can-show");
+    window.addEventListener("keydown", (e) => {
+      if (e.code === "Enter") {
+        loader.classList.add("hidden");
+      }
+    });
+    // window.addEventListener("lostpointercapture", () => {
+    //   console.log("!");
+    // });
   }
 });
