@@ -9,7 +9,6 @@ import {
 } from "three";
 import { setWalls } from "../../Utils";
 import { Picture } from "./Picture.ts";
-import { PATH } from "../../Utils/Loader.ts";
 
 export type Wall = Mesh<PlaneGeometry, MeshStandardMaterial>;
 
@@ -70,21 +69,21 @@ export class Gallery {
     ),
   };
   constructor() {
-    this.viewer.loader.texture.load(`${PATH}/floor-2.jpg`, (t) => {
-      t.wrapS = RepeatWrapping;
-      t.wrapT = RepeatWrapping;
-      t.repeat.set(10, 10);
-      t.needsUpdate = true;
-      this.floor.material.map = t;
-      this.floor.material.needsUpdate = true;
-    });
+    this.viewer.loader.itemsLoaded.on(({ textures }) => {
+      const { ceil, floor } = textures;
 
-    this.viewer.loader.texture.load(`${PATH}/ceil3.jpg`, (t) => {
-      t.wrapS = RepeatWrapping;
-      t.wrapT = RepeatWrapping;
-      t.repeat.set(10, 10);
-      t.needsUpdate = true;
-      this.ceil.material.map = t;
+      floor.wrapS = RepeatWrapping;
+      floor.wrapT = RepeatWrapping;
+      floor.repeat.set(10, 10);
+      floor.needsUpdate = true;
+      this.floor.material.map = floor;
+      this.floor.material.needsUpdate = true;
+
+      ceil.wrapS = RepeatWrapping;
+      ceil.wrapT = RepeatWrapping;
+      ceil.repeat.set(10, 10);
+      ceil.needsUpdate = true;
+      this.ceil.material.map = ceil;
       this.ceil.material.needsUpdate = true;
     });
 
@@ -125,31 +124,31 @@ export class Gallery {
       lastSupper,
     } = this.pictures;
 
-    monaLisa.position.set(0, 1, -3);
+    monaLisa.position.set(0, 0.8, -3);
 
-    vanGogh.position.set(-1.5, 1, -3);
+    vanGogh.position.set(-1.5, 0.8, -3);
 
-    munch.position.set(1.5, 1, -3);
+    munch.position.set(1.5, 0.8, -3);
 
-    leo.position.set(-3, 1, 1.5);
+    leo.position.set(-3, 0.8, 1.5);
     leo.rotation.y = Math.PI / 2;
 
-    wave.position.set(-3, 1, 0);
+    wave.position.set(-3, 0.8, 0);
     wave.rotation.y = Math.PI / 2;
 
-    rembrandt.position.set(-3, 1, -1.5);
+    rembrandt.position.set(-3, 0.8, -1.5);
     rembrandt.rotation.y = Math.PI / 2;
 
-    monet.position.set(3, 1, -1.5);
+    monet.position.set(3, 0.8, -1.5);
     monet.rotation.y = -Math.PI / 2;
 
-    liberty.position.set(3, 1, 0);
+    liberty.position.set(3, 0.8, 0);
     liberty.rotation.y = -Math.PI / 2;
 
-    irises.position.set(3, 1, 1.5);
+    irises.position.set(3, 0.8, 1.5);
     irises.rotation.y = -Math.PI / 2;
 
-    lastSupper.position.set(0, 1, 3);
+    lastSupper.position.set(0, 0.8, 3);
     lastSupper.rotation.y = Math.PI;
 
     this.body.add(

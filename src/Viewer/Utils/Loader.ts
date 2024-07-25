@@ -1,4 +1,5 @@
 import { Texture, TextureLoader } from "three";
+//@ts-ignore
 import { Font, FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TypedEvent } from "./Event.ts";
 
@@ -11,7 +12,7 @@ type ItemToLoad<T> = {
   path: string;
 };
 
-type LoadedItems<T, K> = {
+type LoadedItems<T extends string, K> = {
   [key in T]: K;
 };
 
@@ -25,7 +26,9 @@ export type TextureNames =
   | "monet"
   | "liberty"
   | "irises"
-  | "lastSupper";
+  | "lastSupper"
+  | "ceil"
+  | "floor";
 
 type FontNames = "gentilis";
 
@@ -46,7 +49,7 @@ const texturesToLoad: TextureToLoad[] = [
   },
   {
     name: "munch",
-    path: `${PATH}/van-gogh-2.jpg`,
+    path: `${PATH}/munch.jpg`,
   },
   {
     name: "leo",
@@ -75,6 +78,14 @@ const texturesToLoad: TextureToLoad[] = [
   {
     name: "lastSupper",
     path: `${PATH}/last-supper.jpg`,
+  },
+  {
+    name: "ceil",
+    path: `${PATH}/ceil.jpg`,
+  },
+  {
+    name: "floor",
+    path: `${PATH}/floor.jpg`,
   },
 ];
 

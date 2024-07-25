@@ -1,7 +1,7 @@
 import { Camera } from "./Camera.ts";
 import { Renderer } from "./Renderer.ts";
 import { World } from "./World";
-import { Scene, TextureLoader } from "three";
+import { Scene } from "three";
 import { Sizes } from "./Utils/Sizes.ts";
 import { Time } from "./Utils/Time.ts";
 import { DebugUI } from "./Utils/DebugUI.ts";
