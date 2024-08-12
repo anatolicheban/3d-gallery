@@ -53,45 +53,11 @@ export class Camera {
 
     if (controls.isLocked) {
       const origin = this.viewer.camera.instance.position;
-      // const dir = new Vector3();
-      //
-      // this.viewer.camera.instance.getWorldDirection(dir);
-      // dir.y = 0;
-      // dir.normalize();
-      //
-      // //Forward check
-      // const canForward = !checkCollisions(this.raycaster, origin, dir, walls);
-      //
-      // //Backward check
-      // const backDir = new Vector3(-dir.x, 0, -dir.z);
-      // const canBackward = !checkCollisions(
-      //   this.raycaster,
-      //   origin,
-      //   backDir,
-      //   walls,
-      // );
-      //
-      // //Left check
-      // const leftDir = new Vector3(dir.z, 0, -dir.x);
-      // const canLeft = !checkCollisions(this.raycaster, origin, leftDir, walls);
-      //
-      // //Right check
-      // const rightDir = new Vector3(-dir.z, 0, dir.x);
-      // const canRight = !checkCollisions(
-      //   this.raycaster,
-      //   origin,
-      //   rightDir,
-      //   walls,
-      // );
 
       const vel = 0.02;
-      // canForward &&
       moving.forward && controls.moveForward(vel);
-      // canBackward &&
       moving.backward && controls.moveForward(-vel);
-      // canLeft &&
       moving.left && controls.moveRight(-vel);
-      // canRight &&
       moving.right && controls.moveRight(vel);
 
       const forwardDir = new Vector3(0, 0, -1);

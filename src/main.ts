@@ -27,14 +27,10 @@ viewer.loader.progressEvent.on((p) => {
 
   if (p === 100) {
     pressEnterText.classList.add("shown");
-    // pauseScreen.classList.add("can-show");
     window.addEventListener("keydown", (e) => {
       if (e.code === "Enter") {
         loader.classList.add("hidden");
       }
     });
-    // window.addEventListener("lostpointercapture", () => {
-    //   console.log("!");
-    // });
   }
 });
