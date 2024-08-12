@@ -65,7 +65,8 @@
       top: calc(100% + 6px);
     }
   }
-  .press {
+  .press,
+  .hint {
     font-weight: 300;
     margin-top: 70px;
     //letter-spacing: 0.25em;
@@ -75,6 +76,14 @@
     &.shown {
       visibility: initial;
     }
+  }
+  .hint {
+    visibility: initial;
+    animation: none;
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
