@@ -3,9 +3,7 @@ import { Texture, TextureLoader } from "three";
 import { Font, FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { TypedEvent } from "./Event.ts";
 
-export const PATH = location.hostname.includes("localhost")
-  ? ""
-  : "/portfolio/3d-gallery";
+export const PATH = '';
 
 type ItemToLoad<T> = {
   name: T;
