@@ -1,5 +1,5 @@
 import {defineConfig} from "vite";
 
 export default defineConfig({
-  base: '/portfolio/3d-gallery'
+  // base: '/portfolio/3d-gallery'
 })
